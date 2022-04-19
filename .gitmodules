@@ -1,3 +1,0 @@
-[submodule "templates/node/bot-base-template"]
-	path = templates/node/bot-base-template
-	url = https://github.com/bot-base/telegram-bot-template
