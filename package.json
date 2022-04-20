@@ -35,7 +35,9 @@
     "create-grammy": "./build/index.js"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "npx eslint --ext .ts src/**/*.ts",
+    "lint:fix": "npx eslint --fix --ext .ts src/**/*.ts"
   },
   "dependencies": {
     "boxen": "^6.2.1",
@@ -61,6 +63,9 @@
     "@types/prompts": "^2.0.14",
     "@types/rimraf": "^3.0.2",
     "@types/tar": "^6.1.1",
-    "@types/validate-npm-package-name": "^3.0.3"
+    "@types/validate-npm-package-name": "^3.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint": "^8.13.0"
   }
 }
