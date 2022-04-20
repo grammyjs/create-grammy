@@ -35,13 +35,14 @@ npx create-discordx
   - For **node** we already have needed `tsconfig.json`, so you **don't** need to write this
   - For **node** leave **name** in empty, because this field is automatically created at the stage of template installation
 
-## If you have own repository with template
-
-In this case we will mount your template as git submodule. Please, open issue with choosed **Connect my own template** option.
-
 5. Push your branch to GitHub:
    ```shell
    git push origin my-branch
    ```
   
 6. In GitHub, send a pull request to create-grammy:main.
+
+
+## If you have own repository with template
+
+In this case we will mount your template as git submodule. Please, open issue with choosed **Connect my own template** option.
