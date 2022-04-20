@@ -8,4 +8,4 @@ COPY . /app
 
 RUN deno cache src/mod.ts
 
-CMD ["run", "--allow-all", "src/mod.ts"]
+CMD ["run", "--unstable", "--allow-all", "src/mod.ts"]
