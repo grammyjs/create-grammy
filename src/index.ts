@@ -180,7 +180,7 @@ console.log();
 console.log(chalk.blueBright("?"), chalk.bold("Support"));
 console.log("    Telegram channel: https://t.me/grammyjs");
 console.log("          Documentation: https://grammy.dev");
-console.log("          GitHub: https://github.com/grammy");
+console.log("        GitHub: https://github.com/grammyjs");
 console.log();
 console.log(
   chalk.greenBright("√"),
