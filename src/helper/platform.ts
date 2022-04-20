@@ -1,6 +1,6 @@
 import prompts from 'prompts';
 
-export type Platform = 'deno' | 'node'
+export type Platform = 'deno' | 'node' | 'other'
 
 export async function GetPlatform(): Promise<Platform> {
   const selected = await prompts<string>(
@@ -13,6 +13,10 @@ export async function GetPlatform(): Promise<Platform> {
         {
           title: 'Node',
           value: 'node',
+        },
+        {
+          title: 'Other',
+          value: 'other',
         },
       ],
       message: 'Pick platform',

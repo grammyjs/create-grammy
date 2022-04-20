@@ -36,8 +36,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "npx eslint --ext .ts src/**/*.ts",
-    "lint:fix": "npx eslint --fix --ext .ts src/**/*.ts"
+    "lint": "npx eslint --ext .ts src",
+    "lint:fix": "npx eslint --fix --ext .ts src"
   },
   "dependencies": {
     "boxen": "^6.2.1",

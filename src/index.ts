@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 
-import chalk from "chalk";
-import { execSync } from "child_process";
-import path from "node:path";
-import ora from "ora";
-import prompts from "prompts";
-import fs from 'node:fs/promises'
-import { existsSync } from 'node:fs'
+import chalk from 'chalk';
+import { execSync } from 'child_process';
+import path from 'node:path';
+import ora from 'ora';
+import prompts from 'prompts';
+import fs from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 
-import { IsFolderEmpty, MakeDir } from "./helper/dir.js";
-import { TryGitInit } from "./helper/git.js";
-import { ValidateNpmName } from "./helper/npm.js";
+import { IsFolderEmpty, MakeDir } from './helper/dir.js';
+import { TryGitInit } from './helper/git.js';
+import { ValidateNpmName } from './helper/npm.js';
 import {
   GetPackageManager,
   InstallPackage,
   PackageManager,
-} from "./helper/package-manager.js";
+} from './helper/package-manager.js';
 import { GetPlatform } from './helper/platform.js';
-import { DownloadAndExtractTemplate, GetTemplates } from "./helper/template.js";
-import "./helper/updater.js";
+import { DownloadAndExtractTemplate, GetTemplates } from './helper/template.js';
+import './helper/updater.js';
 import { DownloadAndExtractTSConfig } from './helper/tsconfig.js';
 import { DownloadAndExtractDockerFiles } from './helper/docker.js';
 import { repoName } from './helper/reponame.js';
@@ -28,21 +28,21 @@ import { repoName } from './helper/reponame.js';
  * Get project path and name
  */
 
-let projectPath = "./";
+let projectPath = './';
 
 const res = await prompts(
   {
-    initial: "my-app",
-    message: "What is your project named?",
-    name: "path",
-    type: "text",
+    initial: 'my-app',
+    message: 'What is your project named?',
+    name: 'path',
+    type: 'text',
     validate: (name) => {
       const validation = ValidateNpmName(path.basename(path.resolve(name)));
       if (validation.valid) {
         return true;
       }
 
-      return "Invalid project name: " + validation.problems?.[0] ?? "unknown";
+      return 'Invalid project name: ' + validation.problems?.[0] ?? 'unknown';
     },
   },
   {
@@ -52,7 +52,7 @@ const res = await prompts(
   }
 );
 
-if (typeof res.path === "string") {
+if (typeof res.path === 'string') {
   projectPath = res.path.trim();
 }
 
@@ -63,7 +63,7 @@ const projectName = path.basename(resolvedProjectPath);
  * Select platform
  */
 
-const platform = await GetPlatform()
+const platform = await GetPlatform();
 
 
 /**
@@ -73,16 +73,16 @@ const platform = await GetPlatform()
 const templateList = await GetTemplates(platform);
 
 if (!templateList.length) {
-  console.log(chalk.red("> Unable to load templates :("));
+  console.log(chalk.red('> Unable to load templates :('));
   process.exit();
 }
 
 const response = await prompts<string>(
   {
     choices: templateList,
-    message: "Pick template",
-    name: "template",
-    type: "select",
+    message: 'Pick template',
+    name: 'template',
+    type: 'select',
   },
   {
     onCancel: () => {
@@ -91,10 +91,10 @@ const response = await prompts<string>(
   }
 );
 
-const isCustomTemplate = !response.template.toLowerCase().includes(repoName)
+const isCustomTemplate = !response.template.toLowerCase().includes(repoName);
 
-if (!response.template || typeof response.template !== "string") {
-  console.log(chalk.red("> Please select a template :("));
+if (!response.template || typeof response.template !== 'string') {
+  console.log(chalk.red('> Please select a template :('));
   process.exit();
 }
 
@@ -105,7 +105,7 @@ if (!response.template || typeof response.template !== "string") {
 try {
   await MakeDir(resolvedProjectPath);
 } catch (err) {
-  console.log(chalk.red("> Failed to create specified directory :("));
+  console.log(chalk.red('> Failed to create specified directory :('));
   process.exit();
 }
 
@@ -122,23 +122,23 @@ if (!IsFolderEmpty(resolvedProjectPath, projectName)) {
  */
 
 const spinner = ora({
-  text: chalk.bold("Downloading template..."),
+  text: chalk.bold('Downloading template...'),
 }).start();
 
 try {
   await DownloadAndExtractTemplate(resolvedProjectPath, response.template);
-  spinner.succeed(chalk.bold("Downloaded template"));
+  spinner.succeed(chalk.bold('Downloaded template'));
 } catch (err) {
-  console.error(err)
-  spinner.fail(chalk.bold("Failed to download selected template :("));
+  console.error(err);
+  spinner.fail(chalk.bold('Failed to download selected template :('));
   process.exit();
 }
 
 if (platform === 'node') {
   try {
-    await fs.access(path.resolve(resolvedProjectPath, 'tsconfig.json'))
+    await fs.access(path.resolve(resolvedProjectPath, 'tsconfig.json'));
   } catch (error) {
-    await DownloadAndExtractTSConfig(resolvedProjectPath)
+    await DownloadAndExtractTSConfig(resolvedProjectPath);
   }
 }
 
@@ -152,11 +152,11 @@ if (platform === 'node') {
       `npx -y json -I -f package.json -e "this.name=\\"${projectName}\\""`,
       {
         cwd: resolvedProjectPath,
-        stdio: "ignore",
+        stdio: 'ignore',
       }
     );
   } catch (err) {
-    console.log(chalk.red("> Failed to update project name :("));
+    console.log(chalk.red('> Failed to update project name :('));
   }
 }
 
@@ -171,8 +171,8 @@ TryGitInit(resolvedProjectPath);
  * Install packages
  */
 
-if (!isCustomTemplate) {
-  let packageManager: PackageManager | null = null
+if (!isCustomTemplate && platform !== 'other') {
+  let packageManager: PackageManager | null = null;
 
   if (platform === 'node') {
     packageManager = await GetPackageManager();
@@ -181,13 +181,13 @@ if (!isCustomTemplate) {
   await InstallPackage(resolvedProjectPath, platform, packageManager);
 }
 
-if (!existsSync(path.resolve(resolvedProjectPath, 'Dockerfile'))) {
+if (!existsSync(path.resolve(resolvedProjectPath, 'Dockerfile')) && platform !== 'other') {
   const addDocker = await prompts<string>(
     {
       choices: [{ title: 'Yes', value: true }, { title: 'No', value: false }],
-      message: "Add docker related files",
-      name: "docker",
-      type: "select",
+      message: 'Add docker related files',
+      name: 'docker',
+      type: 'select',
     },
     {
       onCancel: () => {
@@ -197,25 +197,25 @@ if (!existsSync(path.resolve(resolvedProjectPath, 'Dockerfile'))) {
   );
   
   if (addDocker.docker) {
-    await DownloadAndExtractDockerFiles(resolvedProjectPath, platform)
+    await DownloadAndExtractDockerFiles(resolvedProjectPath, platform);
   }
 }
 
 console.log(
-  chalk.greenBright("√"),
-  chalk.bold("Created grammY project"),
-  chalk.gray("»"),
+  chalk.greenBright('√'),
+  chalk.bold('Created grammY project'),
+  chalk.gray('»'),
   chalk.greenBright(projectName)
 );
 
 console.log();
-console.log(chalk.blueBright("?"), chalk.bold("Support"));
-console.log("    Telegram channel: https://t.me/grammyjs");
-console.log("          Documentation: https://grammy.dev");
-console.log("        GitHub: https://github.com/grammyjs");
+console.log(chalk.blueBright('?'), chalk.bold('Support'));
+console.log('    Telegram channel: https://t.me/grammyjs');
+console.log('          Documentation: https://grammy.dev');
+console.log('        GitHub: https://github.com/grammyjs');
 console.log();
 console.log(
-  chalk.greenBright("√"),
-  chalk.bold("Thank you for using grammY"),
-  chalk.red("❤️")
+  chalk.greenBright('√'),
+  chalk.bold('Thank you for using grammY'),
+  chalk.red('❤️')
 );

@@ -36,5 +36,6 @@ body:
       options:
         - "Node"
         - "Deno"
+        - "Other"
     validations:
       required: true
