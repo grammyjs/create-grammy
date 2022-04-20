@@ -1,15 +1,8 @@
 import boxen from "boxen";
 import chalk from "chalk";
 import isInstalledGlobally from "is-installed-globally";
-import { readFile } from "node:fs/promises";
 import checkForUpdate from "update-check";
-
-/**
- * Read package.json
- */
-const packageJson = JSON.parse(
-  await readFile(new URL("../../package.json", import.meta.url), "utf-8")
-);
+import { packageJson } from './packageJson.js';
 
 /**
  * Check for update

@@ -4,12 +4,13 @@ import fetch from 'node-fetch';
 import fs from 'node:fs'
 import path from 'node:path'
 import { Platform } from './platform.js';
+import { repoName } from './reponame.js';
 
 export async function DownloadAndExtractDockerFiles(
   root: string,
   platform: Platform
 ): Promise<void> {
-  const filesRequest = await fetch(`https://api.github.com/repos/satont/create-grammy/contents/configs/docker/${platform}`)
+  const filesRequest = await fetch(`https://api.github.com/repos/${repoName}/contents/configs/docker/${platform}`)
   const filesArray = await filesRequest.json() as Array<{ name: string, download_url: string, type: 'file' | 'dir' }>
 
   for (const file of filesArray.filter(file => file.type === 'file')) {

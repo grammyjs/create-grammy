@@ -3,6 +3,7 @@ import tar from "tar";
 import { promisify } from "util";
 import fetch from 'node-fetch';
 import { Platform } from './platform.js';
+import { repoName } from './reponame.js';
 
 /**
  * Get templates list
@@ -10,7 +11,7 @@ import { Platform } from './platform.js';
  * @returns
  */
 export async function GetTemplates(platform: Platform) {
-  const r = await fetch(`https://api.github.com/repos/Satont/create-grammy/contents/templates/${platform}`)
+  const r = await fetch(`https://api.github.com/repos/${repoName}/contents/templates/${platform}`)
   const response = await r.json() as Array<{ name: string, git_url: string }>
 
   return response
@@ -22,7 +23,7 @@ export async function DownloadAndExtractTemplate(
   treeUrl: string
 ): Promise<void> {
   const pipeline = promisify(Stream.pipeline);
-  // "https://api.github.com/repos/Satont/create-grammy/git/trees/eb63b5810b3c5afb6ef32aaa039d4e89bd26829f",
+  // "https://api.github.com/repos/grammyjs/create-grammy/git/trees/eb63b5810b3c5afb6ef32aaa039d4e89bd26829f",
   // "https://api.github.com/repos/bot-base/telegram-bot-template/git/trees/f214deaac92c4c75ad3ae092495563d2f0333e84",
   treeUrl = treeUrl.replace('https://api.github.com/repos/', '')
   // bot-base/telegram-bot-template/git/trees/f214deaac92c4c75ad3ae092495563d2f0333e84

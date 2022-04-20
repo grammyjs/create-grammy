@@ -6,6 +6,7 @@ import path from "node:path";
 import ora from "ora";
 import prompts from "prompts";
 import fs from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 
 import { IsFolderEmpty, MakeDir } from "./helper/dir.js";
 import { TryGitInit } from "./helper/git.js";
@@ -20,6 +21,7 @@ import { DownloadAndExtractTemplate, GetTemplates } from "./helper/template.js";
 import "./helper/updater.js";
 import { DownloadAndExtractTSConfig } from './helper/tsconfig.js';
 import { DownloadAndExtractDockerFiles } from './helper/docker.js';
+import { repoName } from './helper/reponame.js';
 
 
 /**
@@ -89,7 +91,7 @@ const response = await prompts<string>(
   }
 );
 
-const isCustomTemplate = !response.template.toLowerCase().includes('satont/create-grammy')
+const isCustomTemplate = !response.template.toLowerCase().includes(repoName)
 
 if (!response.template || typeof response.template !== "string") {
   console.log(chalk.red("> Please select a template :("));
@@ -179,22 +181,24 @@ if (!isCustomTemplate) {
   await InstallPackage(resolvedProjectPath, platform, packageManager);
 }
 
-const addDocker = await prompts<string>(
-  {
-    choices: [{ title: 'Yes', value: true }, { title: 'No', value: false }],
-    message: "Add docker related files",
-    name: "docker",
-    type: "select",
-  },
-  {
-    onCancel: () => {
-      process.exit();
+if (!existsSync(path.resolve(resolvedProjectPath, 'Dockerfile'))) {
+  const addDocker = await prompts<string>(
+    {
+      choices: [{ title: 'Yes', value: true }, { title: 'No', value: false }],
+      message: "Add docker related files",
+      name: "docker",
+      type: "select",
     },
+    {
+      onCancel: () => {
+        process.exit();
+      },
+    }
+  );
+  
+  if (addDocker.docker) {
+    await DownloadAndExtractDockerFiles(resolvedProjectPath, platform)
   }
-);
-console.log(addDocker, resolvedProjectPath)
-if (addDocker.docker) {
-  await DownloadAndExtractDockerFiles(resolvedProjectPath, platform)
 }
 
 console.log(

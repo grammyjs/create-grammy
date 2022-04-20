@@ -13,13 +13,13 @@
     "template",
     "bot"
   ],
-  "homepage": "https://github.com/satont/create-grammy#readme",
+  "homepage": "https://github.com/grammyjs/create-grammy#readme",
   "bugs": {
-    "url": "https://github.com/satont/create-grammy/issues"
+    "url": "https://github.com/grammyjs/create-grammy/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/satont/create-grammy.git"
+    "url": "git+https://github.com/grammyjs/create-grammy.git"
   },
   "license": "Apache-2.0",
   "author": "Satont <satontworldwide@gmail.com> (https://github.com/satont)",
