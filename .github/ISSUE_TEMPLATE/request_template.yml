@@ -1,0 +1,25 @@
+name: Reqest template
+description: Request template from contributors
+title: "[Request template]: "
+labels: [template, "reqeust"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description?
+      description: Please describe template a bit
+      placeholder: Please describe template a bit
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Please select the platform template should be written for.
+      multiple: true
+      options:
+        - "Node"
+        - "Deno"
+    validations:
+      required: false

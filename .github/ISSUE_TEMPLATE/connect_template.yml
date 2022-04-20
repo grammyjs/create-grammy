@@ -1,0 +1,31 @@
+name: Connect my own template
+description: Connect your template to this repository via git submodules
+title: "[My Template]: "
+labels: [template, "connect"]
+assignees:
+  - Satont
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to connect your own template!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description?
+      description: Please describe your template a bit
+      placeholder: Please describe your template a bit
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Please select the platform your template written for.
+      options:
+        - "Node"
+        - "Deno"
+    validations:
+      required: true
