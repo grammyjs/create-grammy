@@ -12,7 +12,7 @@ It will then download the files you want.
 # 💻 Usage
 
 ```
-npx create-discordx
+npx create-grammy
 ```
 
 Or
