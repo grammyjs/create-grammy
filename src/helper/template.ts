@@ -12,9 +12,10 @@ import { repoName } from './reponame.js';
  */
 export async function GetTemplates(platform: Platform) {
   const r = await fetch(`https://api.github.com/repos/${repoName}/contents/templates/${platform}`)
-  const response = await r.json() as Array<{ name: string, git_url: string }>
+  const response = await r.json() as Array<{ name: string, git_url: string, type: string }>
 
   return response
+    .filter(row => row.type !== 'file')
     .map((row) => ({ title: row.name, value: row.git_url }))
 }
 
