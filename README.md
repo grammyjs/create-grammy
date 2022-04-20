@@ -33,7 +33,7 @@ npx create-discordx
   - **Deno** template should contain entrypoint as `src/mod.ts`
   - By **default** we ship own Dockerfile, but you can write own one
   - For **node** we already have needed `tsconfig.json`, so you **don't** need to write this
-  - For **node** leave **name** in empty, because this field is automatically created at the stage of template installation
+  - For **node** leave **name** in *package.json* empty, because this field is automatically created at the stage of template installation
 
 5. Push your branch to GitHub:
    ```shell
