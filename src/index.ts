@@ -19,6 +19,7 @@ import { GetPlatform } from './helper/platform.js';
 import { DownloadAndExtractTemplate, GetTemplates } from "./helper/template.js";
 import "./helper/updater.js";
 import { DownloadAndExtractTSConfig } from './helper/tsconfig.js';
+import { DownloadAndExtractDockerFiles } from './helper/docker.js';
 
 
 /**
@@ -176,6 +177,24 @@ if (!isCustomTemplate) {
   }
 
   await InstallPackage(resolvedProjectPath, platform, packageManager);
+}
+
+const addDocker = await prompts<string>(
+  {
+    choices: [{ title: 'Yes', value: true }, { title: 'No', value: false }],
+    message: "Add docker related files",
+    name: "docker",
+    type: "select",
+  },
+  {
+    onCancel: () => {
+      process.exit();
+    },
+  }
+);
+console.log(addDocker, resolvedProjectPath)
+if (addDocker.docker) {
+  await DownloadAndExtractDockerFiles(resolvedProjectPath, platform)
 }
 
 console.log(

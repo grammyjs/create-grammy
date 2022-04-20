@@ -4,7 +4,6 @@ import ora from "ora";
 import prompts from "prompts";
 import { Platform } from './platform.js';
 
-
 export enum PackageManager {
   npm = 'npm',
   yarn = 'yarn',

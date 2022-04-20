@@ -1,6 +1,6 @@
 import { Stream, Readable } from "node:stream";
 import { promisify } from "util";
-import { fetch } from 'undici';
+import fetch from 'node-fetch';
 import fs from 'node:fs'
 import path from 'node:path'
 

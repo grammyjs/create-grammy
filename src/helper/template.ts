@@ -1,7 +1,7 @@
 import { Stream, Readable } from "node:stream";
 import tar from "tar";
 import { promisify } from "util";
-import { fetch } from 'undici';
+import fetch from 'node-fetch';
 import { Platform } from './platform.js';
 
 /**
