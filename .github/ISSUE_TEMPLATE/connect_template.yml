@@ -11,6 +11,15 @@ body:
         Thanks for taking the time to connect your own template!
 
   - type: textarea
+    id: link
+    attributes:
+      label: Link
+      description: Please write link to your template
+      placeholder: Please write link to your template
+    validations:
+      required: true
+
+  - type: textarea
     id: description
     attributes:
       label: Description?
