@@ -15,6 +15,12 @@ It will then download the files you want.
 npx create-discordx
 ```
 
+Or
+
+```
+npm init @grammyjs/grammy
+```
+
 # ➕ Adding own template
 
 ## If you plan add template into this repository
