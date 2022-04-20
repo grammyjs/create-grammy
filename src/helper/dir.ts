@@ -1,7 +1,7 @@
-import chalk from "chalk";
-import fs from "fs";
-import pfs from "fs/promises";
-import path from "path";
+import chalk from 'chalk';
+import fs from 'fs';
+import pfs from 'fs/promises';
+import path from 'path';
 
 /**
  * Make project directory
@@ -26,17 +26,17 @@ export function MakeDir(
  */
 export function IsFolderEmpty(root: string, name: string): boolean {
   const validFiles = [
-    ".DS_Store",
-    ".git",
-    ".gitattributes",
-    ".gitignore",
-    ".gitlab-ci.yml",
-    ".idea",
-    ".npmignore",
-    "LICENSE",
-    "npm-debug.log",
-    "yarn-debug.log",
-    "yarn-error.log",
+    '.DS_Store',
+    '.git',
+    '.gitattributes',
+    '.gitignore',
+    '.gitlab-ci.yml',
+    '.idea',
+    '.npmignore',
+    'LICENSE',
+    'npm-debug.log',
+    'yarn-debug.log',
+    'yarn-error.log',
   ];
 
   const conflicts = fs
@@ -65,7 +65,7 @@ export function IsFolderEmpty(root: string, name: string): boolean {
 
     console.log();
     console.log(
-      "Either try using a new directory name, or remove the files listed above."
+      'Either try using a new directory name, or remove the files listed above.'
     );
     console.log();
     return false;

@@ -1,7 +1,7 @@
-import boxen from "boxen";
-import chalk from "chalk";
-import isInstalledGlobally from "is-installed-globally";
-import checkForUpdate from "update-check";
+import boxen from 'boxen';
+import chalk from 'chalk';
+import isInstalledGlobally from 'is-installed-globally';
+import checkForUpdate from 'update-check';
 import { packageJson } from './packageJson.js';
 
 /**
@@ -14,10 +14,10 @@ try {
   update = await checkForUpdate(packageJson);
 } catch (err) {
   console.log(
-    boxen("Failed to check for updates", {
-      align: "center",
-      borderColor: "red",
-      borderStyle: "round",
+    boxen('Failed to check for updates', {
+      align: 'center',
+      borderColor: 'red',
+      borderStyle: 'round',
       margin: 1,
       padding: 1,
     })
@@ -26,23 +26,23 @@ try {
 
 if (update) {
   const updateCmd = isInstalledGlobally
-    ? "npm i -g create-discordx@latest"
-    : "npm i create-discordx@latest";
+    ? 'npm i -g create-discordx@latest'
+    : 'npm i create-discordx@latest';
 
   const template =
-    "Update available " +
+    'Update available ' +
     chalk.dim(`${packageJson.version}`) +
-    chalk.reset(" → ") +
+    chalk.reset(' → ') +
     chalk.green(`${update.latest}`) +
-    " \nRun " +
+    ' \nRun ' +
     chalk.cyan(updateCmd) +
-    " to update";
+    ' to update';
 
   console.log(
     boxen(template, {
-      align: "center",
-      borderColor: "yellow",
-      borderStyle: "round",
+      align: 'center',
+      borderColor: 'yellow',
+      borderStyle: 'round',
       margin: 1,
       padding: 1,
     })

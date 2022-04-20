@@ -7,17 +7,17 @@ export async function GetPlatform(): Promise<Platform> {
     {
       choices: [
         {
-          title: "Deno",
+          title: 'Deno',
           value: 'deno',
         },
         {
           title: 'Node',
           value: 'node',
-        }
+        },
       ],
-      message: "Pick platform",
-      name: "platform",
-      type: "select",
+      message: 'Pick platform',
+      name: 'platform',
+      type: 'select',
     },
     {
       onCancel: () => {
@@ -26,5 +26,5 @@ export async function GetPlatform(): Promise<Platform> {
     }
   );
 
-  return selected['platform']
+  return selected['platform'];
 }
