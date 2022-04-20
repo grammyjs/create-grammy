@@ -11,7 +11,7 @@ function getSessionKey(ctx: Context) {
 
 // Sequentialize before accessing session data!
 bot.use(sequentialize(getSessionKey));
-bot.use(session({ getSessionKey }));
+bot.use(session({ getSessionKey, initial: () => ({ pizzaCount: 0 }) }));
 
 // Add the usual middleware, now with safe session support.
 bot.on("message", (ctx) => ctx.reply("Got your message."));
