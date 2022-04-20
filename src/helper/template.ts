@@ -15,7 +15,7 @@ export async function GetTemplates(platform: Platform) {
   const response = await r.json() as Array<{ name: string, git_url: string, type: string }>;
 
   return response
-    .filter(row => row.type !== 'file')
+    .filter(row => !row.name.startsWith('.'))
     .map((row) => ({ title: row.name, value: row.git_url }));
 }
 
