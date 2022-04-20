@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import fetch from 'node-fetch';
 import fs from 'node:fs';
 import path from 'node:path';
-import { repoName } from './reponame';
+import { repoName } from './reponame.js';
 
 export async function DownloadAndExtractTSConfig(
   root: string,
