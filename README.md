@@ -20,7 +20,7 @@ npx create-discordx
 ## If you plan add template into this repository
 
 
-1. [Fork](https://github.com/Satont/create-grammy/fork) the repository 
+1. [Fork](https://github.com/grammy/create-grammy/fork) the repository 
 2. Clone your own repository
 3. In your forked repository, make your changes in a new git branch:
    ```shell
