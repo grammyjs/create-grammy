@@ -9,7 +9,7 @@ export async function DownloadAndExtractTSConfig(
   root: string,
 ): Promise<void> {
   const pipeline = promisify(Stream.pipeline);
-  const pipe = await fetch(`https://raw.githubusercontent.com/${repoName}/master/configs/tsconfig.json`)
+  const pipe = await fetch(`https://raw.githubusercontent.com/${repoName}/main/configs/tsconfig.json`)
   const readableWebStream = pipe.body as AsyncIterable<any>;
 
   return pipeline(
