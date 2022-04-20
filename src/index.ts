@@ -5,6 +5,7 @@ import { execSync } from "child_process";
 import path from "node:path";
 import ora from "ora";
 import prompts from "prompts";
+import fs from 'node:fs/promises'
 
 import { IsFolderEmpty, MakeDir } from "./helper/dir.js";
 import { TryGitInit } from "./helper/git.js";
@@ -17,6 +18,7 @@ import {
 import { GetPlatform } from './helper/platform.js';
 import { DownloadAndExtractTemplate, GetTemplates } from "./helper/template.js";
 import "./helper/updater.js";
+import { DownloadAndExtractTSConfig } from './helper/tsconfig.js';
 
 
 /**
@@ -129,6 +131,14 @@ try {
   process.exit();
 }
 
+if (platform === 'node') {
+  try {
+    await fs.access(path.resolve(resolvedProjectPath, 'tsconfig.json'))
+  } catch (error) {
+    await DownloadAndExtractTSConfig(resolvedProjectPath)
+  }
+}
+
 /**
  * Update project name
  */
@@ -167,7 +177,6 @@ if (!isCustomTemplate) {
 
   await InstallPackage(resolvedProjectPath, platform, packageManager);
 }
-
 
 console.log(
   chalk.greenBright("√"),
