@@ -7,6 +7,7 @@ import ora from 'ora';
 import prompts from 'prompts';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import os from 'node:os';
 
 import { IsFolderEmpty, MakeDir } from './helper/dir.js';
 import { TryGitInit } from './helper/git.js';
@@ -165,7 +166,10 @@ if (platform === 'node') {
  * Init git
  */
 
-TryGitInit(resolvedProjectPath);
+const gitInit = TryGitInit(resolvedProjectPath);
+if (gitInit && platform === 'node' && !isCustomTemplate) {
+  await fs.writeFile(path.resolve(resolvedProjectPath, '.gitignore'), `dist${os.EOL}node_modules${os.EOL}`);
+}
 
 /**
  * Install packages
