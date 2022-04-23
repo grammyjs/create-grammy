@@ -2,7 +2,7 @@ import boxen from 'boxen';
 import chalk from 'chalk';
 import isInstalledGlobally from 'is-installed-globally';
 import checkForUpdate from 'update-check';
-import { packageJson } from './packageJson.js';
+import { packageJson } from './packageJson.ts';
 
 /**
  * Check for update

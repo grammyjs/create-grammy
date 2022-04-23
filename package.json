@@ -35,7 +35,7 @@
     "create-grammy": "./build/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "deno2node tsconfig.json",
     "lint": "npx eslint --ext .ts src",
     "lint:fix": "npx eslint --fix --ext .ts src",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
@@ -47,11 +47,9 @@
     "node-fetch": "^3.2.3",
     "ora": "^6.1.0",
     "prompts": "^2.4.2",
-    "rimraf": "^3.0.2",
     "tar": "^6.1.11",
     "typescript": "^4.6.3",
-    "update-check": "^1.5.4",
-    "validate-npm-package-name": "^4.0.0"
+    "update-check": "^1.5.4"
   },
   "engines": {
     "node": ">=16.0.0",
@@ -62,12 +60,11 @@
   },
   "devDependencies": {
     "@types/prompts": "^2.0.14",
-    "@types/rimraf": "^3.0.2",
     "@types/tar": "^6.1.1",
-    "@types/validate-npm-package-name": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "conventional-changelog-cli": "^2.2.2",
+    "deno2node": "^1.3.0",
     "eslint": "^8.13.0"
   }
 }

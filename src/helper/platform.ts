@@ -1,9 +1,9 @@
-import prompts from 'prompts';
+import { promt } from '../deps.deno.ts';
 
 export type Platform = 'deno' | 'node' | 'other'
 
 export async function GetPlatform(): Promise<Platform> {
-  const selected = await prompts<string>(
+  const selected = await promt(
     {
       choices: [
         {
@@ -20,15 +20,9 @@ export async function GetPlatform(): Promise<Platform> {
         },
       ],
       message: 'Pick platform',
-      name: 'platform',
       type: 'select',
-    },
-    {
-      onCancel: () => {
-        process.exit();
-      },
     }
   );
 
-  return selected['platform'];
+  return selected;
 }

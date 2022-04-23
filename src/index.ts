@@ -1,29 +1,24 @@
 #!/usr/bin/env node
 
-import chalk from 'chalk';
-import { execSync } from 'child_process';
-import path from 'node:path';
-import ora from 'ora';
-import prompts from 'prompts';
-import fs from 'node:fs/promises';
-import { existsSync } from 'node:fs';
-import os from 'node:os';
+import * as deps from './deps.deno.ts';
 
-import { IsFolderEmpty, MakeDir } from './helper/dir.js';
-import { TryGitInit } from './helper/git.js';
-import { ValidateNpmName } from './helper/npm.js';
+import { IsFolderEmpty, MakeDir } from './helper/dir.ts';
+import { TryGitInit } from './helper/git.ts';
 import {
   GetPackageManager,
   InstallPackage,
   PackageManager,
-} from './helper/package-manager.js';
-import { GetPlatform } from './helper/platform.js';
-import { DownloadAndExtractTemplate, GetTemplates } from './helper/template.js';
-import './helper/updater.js';
-import { DownloadAndExtractTSConfig } from './helper/tsconfig.js';
-import { DownloadAndExtractDockerFiles } from './helper/docker.js';
-import { repoName } from './helper/reponame.js';
+} from './helper/package-manager.ts';
+import { GetPlatform } from './helper/platform.ts';
+import { DownloadAndExtractTemplate, GetTemplates } from './helper/template.ts';
 
+if (!('Deno' in globalThis)) {
+  await import('./helper/updater.js' as any);
+}
+
+import { DownloadAndExtractTSConfig } from './helper/tsconfig.ts';
+import { DownloadAndExtractDockerFiles } from './helper/docker.ts';
+import { repoName } from './helper/reponame.ts';
 
 /**
  * Get project path and name
@@ -31,34 +26,20 @@ import { repoName } from './helper/reponame.js';
 
 let projectPath = './';
 
-const res = await prompts(
+const res = await deps.promt(
   {
     initial: 'my-app',
     message: 'What is your project named?',
-    name: 'path',
     type: 'text',
-    validate: (name) => {
-      const validation = ValidateNpmName(path.basename(path.resolve(name)));
-      if (validation.valid) {
-        return true;
-      }
-
-      return 'Invalid project name: ' + validation.problems?.[0] ?? 'unknown';
-    },
-  },
-  {
-    onCancel: () => {
-      process.exit();
-    },
   }
 );
 
-if (typeof res.path === 'string') {
-  projectPath = res.path.trim();
+if (typeof res === 'string') {
+  projectPath = res.trim();
 }
 
-const resolvedProjectPath = path.resolve(projectPath);
-const projectName = path.basename(resolvedProjectPath);
+const resolvedProjectPath = deps.path.resolve(projectPath);
+const projectName = deps.path.basename(resolvedProjectPath);
 
 /**
  * Select platform
@@ -74,29 +55,23 @@ const platform = await GetPlatform();
 const templateList = await GetTemplates(platform);
 
 if (!templateList.length) {
-  console.log(chalk.red('> Unable to load templates :('));
-  process.exit();
+  console.log(deps.chalk.red('> Unable to load templates :('));
+  deps.process.exit();
 }
 
-const response = await prompts<string>(
+const template = await deps.promt(
   {
     choices: templateList,
     message: 'Pick template',
-    name: 'template',
     type: 'select',
-  },
-  {
-    onCancel: () => {
-      process.exit();
-    },
   }
 );
 
-const isCustomTemplate = !response.template.toLowerCase().includes(repoName);
+const isCustomTemplate = !template.toLowerCase().includes(repoName);
 
-if (!response.template || typeof response.template !== 'string') {
-  console.log(chalk.red('> Please select a template :('));
-  process.exit();
+if (!template || typeof template !== 'string') {
+  console.log(deps.chalk.red('> Please select a template :('));
+  deps.process.exit();
 }
 
 /**
@@ -106,8 +81,8 @@ if (!response.template || typeof response.template !== 'string') {
 try {
   await MakeDir(resolvedProjectPath);
 } catch (err) {
-  console.log(chalk.red('> Failed to create specified directory :('));
-  process.exit();
+  console.log(deps.chalk.red('> Failed to create specified directory :('));
+  deps.process.exit();
 }
 
 /**
@@ -115,29 +90,27 @@ try {
  */
 
 if (!IsFolderEmpty(resolvedProjectPath, projectName)) {
-  process.exit();
+  deps.process.exit();
 }
 
 /**
  * Download and extract template
  */
 
-const spinner = ora({
-  text: chalk.bold('Downloading template...'),
-}).start();
+const spinner = deps.spinner(deps.chalk.bold('Downloading template...')).start();
 
 try {
-  await DownloadAndExtractTemplate(resolvedProjectPath, response.template);
-  spinner.succeed(chalk.bold('Downloaded template'));
+  await DownloadAndExtractTemplate(resolvedProjectPath, template);
+  spinner.succeed(deps.chalk.bold('Downloaded template'));
 } catch (err) {
   console.error(err);
-  spinner.fail(chalk.bold('Failed to download selected template :('));
-  process.exit();
+  spinner.fail(deps.chalk.bold('Failed to download selected template :('));
+  deps.process.exit();
 }
 
 if (platform === 'node') {
   try {
-    await fs.access(path.resolve(resolvedProjectPath, 'tsconfig.json'));
+    await deps.fs.promises.access(deps.path.resolve(resolvedProjectPath, 'tsconfig.json'));
   } catch (error) {
     await DownloadAndExtractTSConfig(resolvedProjectPath);
   }
@@ -149,15 +122,14 @@ if (platform === 'node') {
 
 if (platform === 'node') {
   try {
-    execSync(
-      `npx -y json -I -f package.json -e "this.name=\\"${projectName}\\""`,
+    await deps.exec(
       {
+        cmd: `npx -y json -I -f package.json -e "this.name=\\"${projectName}\\""`,
         cwd: resolvedProjectPath,
-        stdio: 'ignore',
       }
     );
   } catch (err) {
-    console.log(chalk.red('> Failed to update project name :('));
+    console.log(deps.chalk.red('> Failed to update project name :('));
   }
 }
 
@@ -166,9 +138,12 @@ if (platform === 'node') {
  * Init git
  */
 
-const gitInit = TryGitInit(resolvedProjectPath);
+const gitInit = await TryGitInit(resolvedProjectPath);
 if (gitInit && platform === 'node' && !isCustomTemplate) {
-  await fs.writeFile(path.resolve(resolvedProjectPath, '.gitignore'), `dist${os.EOL}node_modules${os.EOL}`);
+  await deps.fs.promises.writeFile(
+    deps.path.resolve(resolvedProjectPath, '.gitignore'), 
+    `dist${deps.os.EOL}node_modules${deps.os.EOL}`
+  );
 }
 
 /**
@@ -185,41 +160,35 @@ if (!isCustomTemplate && platform !== 'other') {
   await InstallPackage(resolvedProjectPath, platform, packageManager);
 }
 
-if (!existsSync(path.resolve(resolvedProjectPath, 'Dockerfile')) && platform !== 'other') {
-  const addDocker = await prompts<string>(
+if (!deps.fs.existsSync(deps.path.resolve(resolvedProjectPath, 'Dockerfile')) && platform !== 'other') {
+  const addDocker = await deps.promt(
     {
       choices: [{ title: 'Yes', value: true }, { title: 'No', value: false }],
       message: 'Add docker related files',
-      name: 'docker',
       type: 'select',
-    },
-    {
-      onCancel: () => {
-        process.exit();
-      },
     }
   );
   
-  if (addDocker.docker) {
+  if (addDocker) {
     await DownloadAndExtractDockerFiles(resolvedProjectPath, platform);
   }
 }
 
 console.log(
-  chalk.greenBright('√'),
-  chalk.bold('Created grammY project'),
-  chalk.gray('»'),
-  chalk.greenBright(projectName)
+  deps.chalk.greenBright('√'),
+  deps.chalk.bold('Created grammY project'),
+  deps.chalk.gray('»'),
+  deps.chalk.greenBright(projectName)
 );
 
 console.log();
-console.log(chalk.blueBright('?'), chalk.bold('Support'));
+console.log(deps.chalk.blueBright('?'), deps.chalk.bold('Support'));
 console.log('    Telegram channel: https://t.me/grammyjs');
 console.log('          Documentation: https://grammy.dev');
 console.log('        GitHub: https://github.com/grammyjs');
 console.log();
 console.log(
-  chalk.greenBright('√'),
-  chalk.bold('Thank you for using grammY'),
-  chalk.red('❤️')
+  deps.chalk.greenBright('√'),
+  deps.chalk.bold('Thank you for using grammY'),
+  deps.chalk.red('❤️')
 );

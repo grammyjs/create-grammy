@@ -1,5 +1,5 @@
-import { readFile } from 'node:fs/promises';
+import { fs } from '../deps.deno.ts';
 
 export const packageJson = JSON.parse(
-  await readFile(new URL('../../package.json', import.meta.url), 'utf-8')
+  await fs.promises.readFile(new URL('../../package.json', import.meta.url), 'utf-8')
 );

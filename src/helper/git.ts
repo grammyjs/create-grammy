@@ -1,12 +1,10 @@
-import { execSync } from 'child_process';
-import path from 'path';
-import rimraf from 'rimraf';
+import * as deps from '../deps.deno.ts';
 
-function IsInGitRepository(root: string): boolean {
+async function IsInGitRepository(root: string) {
   try {
-    execSync('git rev-parse --is-inside-work-tree', {
+    await deps.exec({
+      cmd: 'git rev-parse --is-inside-work-tree',
       cwd: root,
-      stdio: 'ignore',
     });
     return true;
   // eslint-disable-next-line no-empty
@@ -14,34 +12,36 @@ function IsInGitRepository(root: string): boolean {
   return false;
 }
 
-function IsInMercurialRepository(root: string): boolean {
+async function IsInMercurialRepository(root: string) {
   try {
-    execSync('hg --cwd . root', { cwd: root, stdio: 'ignore' });
+    deps.exec({ cwd: root, cmd: 'hg --cwd . root' });
     return true;
   // eslint-disable-next-line no-empty
   } catch (_) {}
   return false;
 }
 
-export function TryGitInit(root: string): boolean {
+export async function TryGitInit(root: string) {
   let didInit = false;
   try {
-    execSync('git --version', { cwd: root, stdio: 'ignore' });
-    if (IsInGitRepository(root) || IsInMercurialRepository(root)) {
+    await deps.exec({ cwd: root, cmd: 'git --version' });
+
+    if (await IsInGitRepository(root) || await IsInMercurialRepository(root)) {
       return false;
     }
 
-    execSync('git init', { cwd: root, stdio: 'ignore' });
+    await deps.exec({ cwd: root, cmd: 'git init' });
     didInit = true;
 
-    execSync('git checkout -b main', { cwd: root, stdio: 'ignore' });
-    execSync('git add -A', { cwd: root, stdio: 'ignore' });
+    await deps.exec({ cwd: root, cmd: 'git checkout -b main' });
+    await deps.exec({ cwd: root, cmd: 'git add -A' });
 
     return true;
   } catch (e) {
+
     if (didInit) {
       try {
-        rimraf.sync(path.join(root, '.git'));
+        deps.fs.rmSync(deps.path.join(root, '.git'));
       } catch (_) {
         // empty statement
       }

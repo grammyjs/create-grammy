@@ -1,0 +1,3 @@
+{
+  "deno.enablePaths": ["./src/deps.deno.ts", "./src/index.ts", "./src/helper"],
+}
