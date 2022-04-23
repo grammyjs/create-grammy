@@ -1,6 +1,6 @@
 {
   "name": "@grammyjs/create-grammy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "create grammY bots with one command",
   "keywords": [
     "grammY",
@@ -37,7 +37,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "npx eslint --ext .ts src",
-    "lint:fix": "npx eslint --fix --ext .ts src"
+    "lint:fix": "npx eslint --fix --ext .ts src",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
     "boxen": "^6.2.1",
@@ -66,6 +67,7 @@
     "@types/validate-npm-package-name": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
+    "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.13.0"
   }
 }
