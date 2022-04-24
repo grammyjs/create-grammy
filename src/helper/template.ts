@@ -34,5 +34,5 @@ export async function DownloadAndExtractTemplate(
     throw new Error('Something bad happend. Please, create bug report at https://github.com/grammyjs/create-grammy');
   }
 
-  await deps.untar(root, pipe.body as any);
+  await deps.untar(root, pipe.body);
 }

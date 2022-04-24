@@ -64,7 +64,7 @@ export async function promt(opts: PromtOptions) {
 
 const Fetch = fetch;
 
-export const untar = async (root: string, body: ReadableStream<any>, ) => {
+export const untar = async (root: string, body: ReadableStream<Uint8Array>, ) => {
   const streamReader = body
     .pipeThrough(new DecompressionStream('gzip'))
     .getReader();
