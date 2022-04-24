@@ -26,8 +26,8 @@ try {
 
 if (update) {
   const updateCmd = isInstalledGlobally
-    ? 'npm i -g create-discordx@latest'
-    : 'npm i create-discordx@latest';
+    ? 'npm i -g create-grammy@latest'
+    : 'npm i create-grammy@latest';
 
   const template =
     'Update available ' +
