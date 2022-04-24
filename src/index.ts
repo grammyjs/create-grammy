@@ -13,7 +13,7 @@ import { GetPlatform } from './helper/platform.ts';
 import { DownloadAndExtractTemplate, GetTemplates } from './helper/template.ts';
 
 if (!('Deno' in globalThis)) {
-  await import('./helper/updater.js' as any);
+  await import('./node/updater.js' as any);
 }
 
 import { DownloadAndExtractTSConfig } from './helper/tsconfig.ts';
