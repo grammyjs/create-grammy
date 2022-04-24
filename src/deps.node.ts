@@ -52,13 +52,10 @@ export async function promt(opts: PromtOptions) {
 
 export const untar = async (root: string, body: NodeJS.ReadableStream) => {
   const stream = tar.extract({ cwd: root, strip: 1 });
-  const writeble = body.pipe(stream);
 
-  return new Promise((resolve) => {
-    writeble.on('finish', () => {
-      resolve(true);
-    });
-  });
+  for await (const chunk of body) {
+    stream.write(chunk);
+  }
 };
 
 const proc = process;
