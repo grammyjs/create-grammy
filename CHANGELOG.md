@@ -1,3 +1,12 @@
+## [0.1.3](https://github.com/grammyjs/create-grammy/compare/0.1.2...0.1.3) (2022-04-25)
+
+
+### Bug Fixes
+
+* **node:** add missed env to index ([6c6d240](https://github.com/grammyjs/create-grammy/commit/6c6d2409d0b2290b48cdfa0d3c2317efecb86086))
+
+
+
 ## [0.1.2](https://github.com/grammyjs/create-grammy/compare/0.1.1...0.1.2) (2022-04-25)
 
 
