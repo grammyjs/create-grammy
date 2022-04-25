@@ -30,8 +30,8 @@ try {
 
 if (update) {
   const updateCmd = isInstalledGlobally
-    ? 'npm i -g create-grammy@latest'
-    : 'npm i create-grammy@latest';
+    ? 'npm i -g @grammyjs/create-grammy@latest'
+    : 'npm i @grammyjs/create-grammy@latest';
 
   const template =
     'Update available ' +
