@@ -13,13 +13,13 @@ It will then download the files you want.
 
 ## Node
 ```
-npx @grammyjs/create-grammy
+npx @grammyjs/create-grammy@latest
 ```
 
 Or
 
 ```
-npm init @grammyjs/grammy
+npm init @grammyjs/grammy@latest
 ```
 
 ## Deno
