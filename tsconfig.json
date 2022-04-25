@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
     "outDir": "build",
     "module": "ESNext",
     "target": "ESNext",
@@ -13,5 +12,6 @@
     "moduleResolution": "Node",
     "esModuleInterop": true
   },
-  "exclude": ["build", "templates", "my-app"]
+  "exclude": ["build", "templates", "my-app"],
+  "include": ["src"]
 }

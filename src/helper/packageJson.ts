@@ -1,5 +1,3 @@
-import { fs } from '../deps.deno.ts';
+import pkg from '../../package.json' assert { type: 'json' };
 
-export const packageJson = JSON.parse(
-  await fs.promises.readFile(new URL('../../package.json', import.meta.url), 'utf-8')
-);
+export const packageJson = pkg;
