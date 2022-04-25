@@ -1,8 +1,5 @@
-import chalk from 'chalk';
-import { exec, execSync } from 'child_process';
-import ora from 'ora';
-import prompts from 'prompts';
-import { Platform } from './platform.js';
+import * as deps from '../deps.deno.ts';
+import { Platform } from './platform.ts';
 
 export enum PackageManager {
   npm = 'npm',
@@ -12,7 +9,7 @@ export enum PackageManager {
 }
 
 export async function GetPackageManager(): Promise<PackageManager | null> {
-  const selected = await prompts<string>(
+  const selected = await deps.promt(
     {
       choices: [
         {
@@ -28,22 +25,16 @@ export async function GetPackageManager(): Promise<PackageManager | null> {
           value: PackageManager.pnpm.toString(),
         },
         {
-          title: 'none - do not install packages',
+          title: 'none',
           value: PackageManager.none.toString(),
         },
       ],
       message: 'Pick package manager',
-      name: 'package-manager',
       type: 'select',
-    },
-    {
-      onCancel: () => {
-        process.exit();
-      },
     }
   );
 
-  const manager = selected['package-manager'] as PackageManager;
+  const manager = selected as PackageManager;
 
   try {
     switch (manager) {
@@ -51,21 +42,21 @@ export async function GetPackageManager(): Promise<PackageManager | null> {
         break;
 
       case PackageManager.npm:
-        execSync('npm --version', { stdio: 'ignore' });
+        deps.exec({ cmd: 'npm --version' });
         break;
 
       case PackageManager.yarn:
-        execSync('yarn --version', { stdio: 'ignore' });
+        deps.exec({ cmd: 'yarn --version' });
         break;
 
       case PackageManager.pnpm:
-        execSync('pnpm --version', { stdio: 'ignore' });
+        deps.exec({ cmd: 'pnpm --version' });
         break;
     }
   } catch (err) {
     console.log(
-      chalk.red('×'),
-      `Could not found ${chalk.greenBright(
+      deps.chalk.red('×'),
+      `Could not found ${deps.chalk.greenBright(
         PackageManager[manager]
       )} package manager, Please install it from:`,
       PackageManager.pnpm === manager
@@ -86,65 +77,35 @@ export async function InstallPackage(
 ): Promise<void> {
   if (PackageManager.none === manager && platform === 'node') {
     console.log(
-      chalk.blueBright('?'),
-      chalk.bold('skipped package installation...')
+      deps.chalk.blueBright('?'),
+      deps.chalk.bold('skipped package installation...')
     );
     return;
   }
 
-  const spinner = ora({
-    text: chalk.bold('Installing packages...'),
-  }).start();
+  const spinner = deps.spinner(deps.chalk.bold('Installing packages...')).start();
 
   try {
     if (platform === 'deno') {
-      await new Promise((resolve, reject) => {
-        exec('deno cache src/mod.ts', { cwd: root }, (err) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(true);
-        });
-      });
+      deps.exec({ cmd: 'deno cache src/mod.ts', cwd: root });
     } else {
       switch (manager) {
         case PackageManager.npm:
-          await new Promise((resolve, reject) => {
-            exec('npm install', { cwd: root }, (err) => {
-              if (err) {
-                reject(err);
-              }
-              resolve(true);
-            });
-          });
+          deps.exec({ cwd: root, cmd: 'npm install' });
           break;
-  
         case PackageManager.yarn:
-          await new Promise((resolve, reject) => {
-            exec('yarn install', { cwd: root }, (err) => {
-              if (err) {
-                reject(err);
-              }
-              resolve(true);
-            });
-          });
+          deps.exec({ cwd: root, cmd: 'yarn install' });
           break;
   
         case PackageManager.pnpm:
-          await new Promise((resolve, reject) => {
-            exec('pnpm install', { cwd: root }, (err) => {
-              if (err) {
-                reject(err);
-              }
-              resolve(true);
-            });
-          });
+          deps.exec({ cmd: 'pnpm install', cwd: root });
+          break;
       }
     }
 
-    spinner.succeed(chalk.bold(`Installed packages via`, chalk.gray('»'), chalk.greenBright(platform === 'deno' ? 'deno cache' : manager)));
+    spinner.succeed(deps.chalk.bold(`Installed packages via`, deps.chalk.gray('»'), deps.chalk.greenBright(platform === 'deno' ? 'deno cache' : manager)));
   } catch (err) {
     console.error(err);
-    spinner.fail(chalk.bold('Failed to install packages. That\'s more likely something wrong with template. If you are sure it\'s a grammY cli problem - please let us know via github issue or contact us in chat.'));
+    spinner.fail(deps.chalk.bold('Failed to install packages. That\'s more likely something wrong with template. If you are sure it\'s a grammY cli problem - please let us know via github issue or contact us in chat.'));
   }
 }

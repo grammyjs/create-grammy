@@ -2,7 +2,11 @@ import boxen from 'boxen';
 import chalk from 'chalk';
 import isInstalledGlobally from 'is-installed-globally';
 import checkForUpdate from 'update-check';
-import { packageJson } from './packageJson.js';
+import fs from 'node:fs/promises';
+
+const packageJson = JSON.parse(
+  await fs.readFile(new URL('../../package.json', import.meta.url), 'utf-8')
+); 
 
 /**
  * Check for update
@@ -26,8 +30,8 @@ try {
 
 if (update) {
   const updateCmd = isInstalledGlobally
-    ? 'npm i -g create-discordx@latest'
-    : 'npm i create-discordx@latest';
+    ? 'npm i -g create-grammy@latest'
+    : 'npm i create-grammy@latest';
 
   const template =
     'Update available ' +

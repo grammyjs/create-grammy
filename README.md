@@ -11,6 +11,7 @@ It will then download the files you want.
 
 # 💻 Usage
 
+## Node
 ```
 npx @grammyjs/create-grammy
 ```
@@ -19,6 +20,22 @@ Or
 
 ```
 npm init @grammyjs/grammy
+```
+
+## Deno
+
+To always use the latest version, the prefetching way to start:
+
+```
+deno run --unstable --allow-env --allow-read --allow-write --allow-net --allow-run -r https://deno.land/x/create-grammy/src/index.ts
+```
+
+Or
+
+```bash
+deno install --unstable --allow-env --allow-read --allow-write --allow-net --allow-run -r -n create-grammy https://deno.land/x/create-grammy/src/index.ts
+
+create-grammy
 ```
 
 # ➕ Adding own template
