@@ -1,3 +1,12 @@
+# [0.1.0](https://github.com/grammyjs/create-grammy/compare/0.0.2...0.1.0) (2022-04-25)
+
+
+### Features
+
+* add deno support ([#5](https://github.com/grammyjs/create-grammy/issues/5)) ([bf2b355](https://github.com/grammyjs/create-grammy/commit/bf2b355f59d59e0a04283d749c9ec74b22e88ba8))
+
+
+
 ## 0.0.2 (2022-04-23)
 
 
