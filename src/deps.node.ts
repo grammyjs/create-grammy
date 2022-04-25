@@ -43,7 +43,9 @@ export async function promt(opts: PromtOptions) {
       validate: opts.validate,
     },
     {
-      onCancel: opts.onCancel,
+      onCancel: opts.onCancel || function () { 
+        process.exit(0);
+      },
     }
   );
     
