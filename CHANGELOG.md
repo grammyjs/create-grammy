@@ -1,3 +1,12 @@
+## [0.1.1](https://github.com/grammyjs/create-grammy/compare/0.1.0...0.1.1) (2022-04-25)
+
+
+### Bug Fixes
+
+* **node:** fix package name in updater script ([2c46381](https://github.com/grammyjs/create-grammy/commit/2c46381d28bf5a2e69b9da3cc3d44b54a7a5fdf6))
+
+
+
 # [0.1.0](https://github.com/grammyjs/create-grammy/compare/0.0.2...0.1.0) (2022-04-25)
 
 
