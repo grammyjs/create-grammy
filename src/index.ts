@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as deps from './deps.deno.ts';
 
 import { IsFolderEmpty, MakeDir } from './helper/dir.ts';
