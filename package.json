@@ -1,6 +1,6 @@
 {
   "name": "@grammyjs/create-grammy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "create grammY bots with one command",
   "keywords": [
     "grammY",

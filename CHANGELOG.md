@@ -1,3 +1,12 @@
+## [0.1.2](https://github.com/grammyjs/create-grammy/compare/0.1.1...0.1.2) (2022-04-25)
+
+
+### Bug Fixes
+
+* **node:** fix node entrypoint ([1e7fcaf](https://github.com/grammyjs/create-grammy/commit/1e7fcafab851e1b66a8f4ce59f4beac8f4389c1b))
+
+
+
 ## [0.1.1](https://github.com/grammyjs/create-grammy/compare/0.1.0...0.1.1) (2022-04-25)
 
 
