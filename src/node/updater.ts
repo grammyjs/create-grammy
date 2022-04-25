@@ -2,7 +2,11 @@ import boxen from 'boxen';
 import chalk from 'chalk';
 import isInstalledGlobally from 'is-installed-globally';
 import checkForUpdate from 'update-check';
-import { packageJson } from '../helper/packageJson.js';
+import fs from 'node:fs/promises';
+
+const packageJson = JSON.parse(
+  await fs.readFile(new URL('../../package.json', import.meta.url), 'utf-8')
+); 
 
 /**
  * Check for update
