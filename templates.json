@@ -1,0 +1,45 @@
+{
+  "node": [
+    {
+      "name": "bot-base/telergam-bot-template",
+      "type": "repository",
+      "owner": "bot-base",
+      "repository": "telegram-bot-template",
+      "branch": "main",
+      "docker_prompt": false,
+      "tsconfig_prompt": false
+    },
+    {
+      "name": "base-runner",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "gmy",
+      "path": "templates/node/base-runner",
+      "docker_prompt": true,
+      "tsconfig_prompt": true
+    }
+  ],
+  "deno": [
+    {
+      "name": "base-runner",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "gmy",
+      "path": "templates/deno/base-runner",
+      "cache_file": "src/mod.ts",
+      "docker_prompt": true,
+      "tsconfig_prompt": false
+    }
+  ],
+  "other": [
+    {
+      "name": "vercel-base-bot",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "gmy",
+      "path": "templates/other/vercel-base-bot",
+      "docker_prompt": true,
+      "tsconfig_prompt": true
+    }
+  ]
+}
