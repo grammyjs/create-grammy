@@ -25,7 +25,7 @@ type Template struct {
 
 func GetTemplates(platform string) ([]Template, error) {
 	var results map[string][]Template
-	url := "https://raw.githubusercontent.com/grammyjs/cli/main/templates.json"
+	url := "https://raw.githubusercontent.com/dcdunkan/gmy/main/templates.json"
 	err := utils.FetchJson(url, &results)
 	if err != nil {
 		return nil, errors.New("failed to fetch templates")
