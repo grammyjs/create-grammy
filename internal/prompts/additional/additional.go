@@ -7,10 +7,10 @@ import (
 	"github.com/cavaliergopher/grab/v3"
 	"github.com/erikgeiser/promptkit/confirmation"
 	"github.com/erikgeiser/promptkit/selection"
-	"github.com/grammyjs/gmy/internal/files"
-	"github.com/grammyjs/gmy/internal/utils"
+	"github.com/grammyjs/create-grammy/internal/files"
+	"github.com/grammyjs/create-grammy/internal/utils"
 
-	t "github.com/grammyjs/gmy/internal/templates"
+	t "github.com/grammyjs/create-grammy/internal/templates"
 )
 
 func Prompt(name string, platform string, template t.Template) {
@@ -29,7 +29,7 @@ func Prompt(name string, platform string, template t.Template) {
 		tscPrompt := confirmation.New(" ? Would you like to add TypeScript configuration file", confirmation.No)
 		tsc, err := tscPrompt.RunPrompt()
 		if err != nil && tsc {
-			_, err := grab.Get(name, "https://raw.githubusercontent.com/grammyjs/cli/main/configs/tsconfig.json")
+			_, err := grab.Get(name, "https://raw.githubusercontent.com/grammyjs/create-grammy/main/configs/tsconfig.json")
 			if err != nil {
 				fmt.Println(" - Skipping... Failed to add a tsconfig.json.")
 			}

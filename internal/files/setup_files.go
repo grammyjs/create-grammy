@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/cavaliergopher/grab/v3"
-	t "github.com/grammyjs/gmy/internal/templates"
+	t "github.com/grammyjs/create-grammy/internal/templates"
 )
 
 func SetupFiles(projectName string, template t.Template) {

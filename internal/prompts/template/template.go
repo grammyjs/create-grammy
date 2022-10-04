@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/erikgeiser/promptkit/selection"
-	t "github.com/grammyjs/gmy/internal/templates"
+	t "github.com/grammyjs/create-grammy/internal/templates"
 )
 
 func Prompt(platform string) t.Template {
