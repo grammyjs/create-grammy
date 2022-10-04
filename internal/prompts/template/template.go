@@ -17,8 +17,8 @@ func Prompt(platform string) t.Template {
 	}
 
 	var templateChoices []string
-	for i := 0; i < len(templates); i++ {
-		templateChoices = append(templateChoices, templates[i].Name)
+	for _, template := range templates {
+		templateChoices = append(templateChoices, template.Name)
 	}
 
 	templatePrompt := selection.New(" > Choose a template:", selection.Choices(templateChoices))
