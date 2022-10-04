@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ const footer = `
  . Community      https://telegram.me/grammyjs
 `
 
-func Run(cmd *cobra.Command, args []string) {
+func run(cmd *cobra.Command, args []string) {
 	var projectName string
 	if len(args) > 0 {
 		err := name.ValidateProjectName(args[0])
@@ -63,10 +63,10 @@ https://github.com/grammyjs/gmy#templates
 
 https://grammy.dev`,
 	Args: cobra.ArbitraryArgs,
-	Run:  Run,
+	Run:  run,
 }
 
-func Execute() {
+func main() {
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
