@@ -20,7 +20,7 @@ TODO: Release executables
 Install using [Go](https://go.dev).
 
 ```shell
-go install github.com/grammyjs/gmy@latest
+go install github.com/grammyjs/create-grammy@latest
 ```
 
 After installation, run **gmy** command to use the tool. You can provide a

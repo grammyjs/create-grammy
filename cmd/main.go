@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/grammyjs/gmy/internal/files"
-	"github.com/grammyjs/gmy/internal/prompts/additional"
-	"github.com/grammyjs/gmy/internal/prompts/name"
-	"github.com/grammyjs/gmy/internal/prompts/platform"
-	template_ "github.com/grammyjs/gmy/internal/prompts/template"
+	"github.com/grammyjs/create-grammy/internal/files"
+	"github.com/grammyjs/create-grammy/internal/prompts/additional"
+	"github.com/grammyjs/create-grammy/internal/prompts/name"
+	"github.com/grammyjs/create-grammy/internal/prompts/platform"
+	template_ "github.com/grammyjs/create-grammy/internal/prompts/template"
 
 	"github.com/spf13/cobra"
 )
@@ -59,7 +59,7 @@ This application is a tool to generate the needed files to quickly
 create a Telegram bot from several templates powered by grammY.
 
 Feel free to add more templates to our template registry:
-https://github.com/grammyjs/gmy#templates
+https://github.com/grammyjs/create-grammy#templates
 
 https://grammy.dev`,
 	Args: cobra.ArbitraryArgs,

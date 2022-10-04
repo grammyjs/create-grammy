@@ -1,4 +1,4 @@
-module github.com/grammyjs/gmy
+module github.com/grammyjs/create-grammy
 
 go 1.19
 

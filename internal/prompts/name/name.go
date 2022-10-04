@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/erikgeiser/promptkit/textinput"
-	"github.com/grammyjs/gmy/internal/files"
+	"github.com/grammyjs/create-grammy/internal/files"
 )
 
 func Prompt() string {
