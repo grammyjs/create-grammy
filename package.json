@@ -1,0 +1,34 @@
+{
+  "name": "create-grammy",
+  "version": "0.2.3",
+  "description": "Scaffold grammY projects in minute",
+  "scripts": {
+    "postinstall": "go-npm install",
+    "preuninstall": "go-npm uninstall"
+  },
+  "goBinary": {
+    "name": "task",
+    "path": "./bin",
+    "url": "https://github.com/grammyjs/create-grammy/releases/download/v{{version}}/create-grammy-{{platform}}_{{arch}}"
+  },
+  "files": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grammyjs/create-grammy.git"
+  },
+  "keywords": [
+    "grammY",
+    "grammy",
+    "cli",
+    "Scaffold"
+  ],
+  "author": "Satont WorldWide <satontworldwide@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grammyjs/create-grammy/issues"
+  },
+  "homepage": "https://grammy.dev",
+  "dependencies": {
+    "@go-task/go-npm": "^0.1.15"
+  }
+}
