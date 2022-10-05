@@ -1,15 +1,9 @@
-# gmy
+# Create grammy
 
 Fast and simple command line tool to setup the needed files to quickly create
 Telegram bots powered by the [grammY bot framework](https://grammy.dev). This
 tool allows you to create projects from several [templates](./templates.json),
 maintained by both official team and third-party users.
-
-<!-- ![504541](https://user-images.githubusercontent.com/70066170/176051380-9930b0de-8bf7-40ab-95ec-ee64e937c282.gif) -->
-
-<!-- ![504541-2](https://user-images.githubusercontent.com/70066170/176159673-214b1a9d-13e4-4b28-80f2-bbaaf162f973.gif) -->
-
-<!-- ![504541-3-med](https://user-images.githubusercontent.com/70066170/176159745-e7a62611-d514-4dba-8353-0d9c78283514.gif) -->
 
 Here is a preview of the tool: https://asciinema.org/a/504541
 
