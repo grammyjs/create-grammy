@@ -7,7 +7,7 @@
     "preuninstall": "go-npm uninstall"
   },
   "goBinary": {
-    "name": "task",
+    "name": "create-grammy",
     "path": "./bin",
     "url": "https://github.com/grammyjs/create-grammy/releases/download/v{{version}}/create-grammy-{{platform}}_{{arch}}"
   },
