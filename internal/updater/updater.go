@@ -51,7 +51,7 @@ func (c *Updater) CheckHasUpdate() bool {
 
 	sha, err := c.getSelfSha256()
 	if err != nil {
-		fmt.Printf("cannot get executable sha256, %s", currentVersionWillBeUsed)
+		fmt.Printf("cannot get executable sha256, %s\n", currentVersionWillBeUsed)
 		return false
 	}
 
@@ -63,20 +63,20 @@ func (c *Updater) CheckHasUpdate() bool {
 	}
 
 	if sha256Asset == nil {
-		fmt.Printf("cannot find sha256 asset in latest release, %s", currentVersionWillBeUsed)
+		fmt.Printf("cannot find sha256 asset in latest release, %s\n", currentVersionWillBeUsed)
 		return false
 	}
 
 	res, err := http.Get(sha256Asset.DownloadUrl)
 	if err != nil {
-		fmt.Printf("cannot download sha256 of latest release, %s", currentVersionWillBeUsed)
+		fmt.Printf("cannot download sha256 of latest release, %s\n", currentVersionWillBeUsed)
 		return false
 	}
 
 	sha256Bytes, err := io.ReadAll(res.Body)
 	defer res.Body.Close()
 	if err != nil {
-		fmt.Printf("cannot read sha256 of latest release, %s", currentVersionWillBeUsed)
+		fmt.Printf("cannot read sha256 of latest release, %s\n", currentVersionWillBeUsed)
 		return false
 	}
 
