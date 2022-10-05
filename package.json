@@ -1,5 +1,5 @@
 {
-  "name": "create-grammy",
+  "name": "@grammyjs/create-grammy",
   "version": "0.2.3",
   "description": "Scaffold grammY projects in minute",
   "scripts": {
