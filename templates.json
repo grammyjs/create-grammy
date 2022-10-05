@@ -13,7 +13,7 @@
       "name": "base-runner",
       "type": "subfolder",
       "owner": "grammyjs",
-      "repository": "gmy",
+      "repository": "create-grammy",
       "path": "templates/node/base-runner",
       "docker_prompt": true,
       "tsconfig_prompt": true
@@ -24,7 +24,7 @@
       "name": "base-runner",
       "type": "subfolder",
       "owner": "grammyjs",
-      "repository": "gmy",
+      "repository": "create-grammy",
       "path": "templates/deno/base-runner",
       "cache_file": "src/mod.ts",
       "docker_prompt": true,
@@ -36,7 +36,7 @@
       "name": "vercel-base-bot",
       "type": "subfolder",
       "owner": "grammyjs",
-      "repository": "gmy",
+      "repository": "create-grammy",
       "path": "templates/other/vercel-base-bot",
       "docker_prompt": true,
       "tsconfig_prompt": true
