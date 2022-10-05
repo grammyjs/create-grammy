@@ -15,8 +15,7 @@ import (
 )
 
 const (
-	Version = "0.2.2"
-	footer  = `
+	footer = `
 	 + Project '%s' created successfully!
 	 
 	 Thank you for using grammY <3
@@ -77,12 +76,12 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	updater := updater.New(Version)
+	updater := updater.New(self)
 	if skipUpdate != nil && !*skipUpdate && updater.CheckHasUpdate() {
 		err := updater.UpdateBinary()
 		if err == nil {
 			fmt.Println("cli updated, restarting...")
-			err = updater.RestartSelf(self)
+			err = updater.RestartSelf()
 			if err != nil {
 				fmt.Println(err)
 			}

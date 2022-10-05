@@ -1,6 +1,7 @@
 package updater
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -28,52 +29,110 @@ type GithubRelease struct {
 }
 
 type Updater struct {
-	currentVersion string
-	Release        *GithubRelease
+	execPath      string
+	LatestRelease *GithubRelease
 }
 
-func New(currentVersion string) *Updater {
-	return &Updater{currentVersion: currentVersion}
+const (
+	currentVersionWillBeUsed = "current version will be used"
+)
+
+func New(path string) *Updater {
+	return &Updater{execPath: path}
 }
 
 func (c *Updater) CheckHasUpdate() bool {
+	c.setLatestRelease()
+
+	if c.LatestRelease == nil {
+		fmt.Printf("cannot fetch latest relase, %s", currentVersionWillBeUsed)
+		return false
+	}
+
+	sha, err := c.getSelfSha256()
+	if err != nil {
+		fmt.Printf("cannot get executable sha256, %s", currentVersionWillBeUsed)
+		return false
+	}
+
+	var sha256Asset *GithubReleaseAsset
+	for _, a := range c.LatestRelease.Assets {
+		if strings.HasSuffix(a.Name, fmt.Sprintf("%s-%s.sha256", runtime.GOOS, runtime.GOARCH)) {
+			sha256Asset = a
+		}
+	}
+
+	if sha256Asset == nil {
+		fmt.Printf("cannot find sha256 asset in latest release, %s", currentVersionWillBeUsed)
+		return false
+	}
+
+	res, err := http.Get(sha256Asset.DownloadUrl)
+	if err != nil {
+		fmt.Printf("cannot download sha256 of latest release, %s", currentVersionWillBeUsed)
+		return false
+	}
+
+	sha256Bytes, err := io.ReadAll(res.Body)
+	defer res.Body.Close()
+	if err != nil {
+		fmt.Printf("cannot read sha256 of latest release, %s", currentVersionWillBeUsed)
+		return false
+	}
+
+	sha256 := string(sha256Bytes)
+
+	return sha != sha256
+}
+
+func (c *Updater) getSelfSha256() (string, error) {
+	h := sha256.New()
+	data, err := os.ReadFile(c.execPath)
+	if err != nil {
+		return "", err
+	}
+
+	sum := string(h.Sum(data))
+	return sum, nil
+}
+
+func (c *Updater) setLatestRelease() {
+	if c.LatestRelease != nil {
+		return
+	}
+
 	res, err := http.Get("https://api.github.com/repos/grammyjs/create-grammy/releases")
 	if err != nil {
-		fmt.Println("cannot fetch updates")
-		return false
+		return
 	}
 
 	bytes, err := io.ReadAll(res.Body)
 	defer res.Body.Close()
 
 	if err != nil {
-		fmt.Println("cannot read body of github response for update check")
-		return false
+		return
 	}
 
 	releases := []GithubRelease{}
 	err = json.Unmarshal(bytes, &releases)
 	if err != nil {
-		fmt.Println("cannot parse github response for update check")
-		return false
+		return
 	}
 
 	if len(releases) < 1 {
-		fmt.Println("seems like some error happend, because 0 releases found in github response")
-		return false
+		return
 	}
 
-	release := releases[0]
-	c.Release = &release
-
-	if release.TagName != c.currentVersion {
-		return true
-	} else {
-		return false
-	}
+	c.LatestRelease = &releases[0]
 }
 
 func (c *Updater) UpdateBinary() error {
+	c.setLatestRelease()
+
+	if c.LatestRelease == nil {
+		return errors.New("cannot get latest release")
+	}
+
 	asset := &GithubReleaseAsset{}
 
 	var suffix string
@@ -84,7 +143,7 @@ func (c *Updater) UpdateBinary() error {
 		suffix = fmt.Sprintf("%s-%s", runtime.GOOS, runtime.GOARCH)
 	}
 
-	for _, a := range c.Release.Assets {
+	for _, a := range c.LatestRelease.Assets {
 		if strings.HasSuffix(a.Name, suffix) {
 			asset = a
 		}
@@ -108,12 +167,12 @@ func (c *Updater) UpdateBinary() error {
 	return nil
 }
 
-func (c *Updater) RestartSelf(self string) error {
+func (c *Updater) RestartSelf() error {
 	args := os.Args
 	env := os.Environ()
 	// Windows does not support exec syscall.
 	if runtime.GOOS == "windows" {
-		cmd := exec.Command(self, args[1:]...)
+		cmd := exec.Command(c.execPath, args[1:]...)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Stdin = os.Stdin
@@ -122,5 +181,5 @@ func (c *Updater) RestartSelf(self string) error {
 		return cmd.Run()
 	}
 
-	return syscall.Exec(self, args, env)
+	return syscall.Exec(c.execPath, args, env)
 }
