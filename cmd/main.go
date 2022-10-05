@@ -9,18 +9,22 @@ import (
 	"github.com/grammyjs/create-grammy/internal/prompts/name"
 	"github.com/grammyjs/create-grammy/internal/prompts/platform"
 	template_ "github.com/grammyjs/create-grammy/internal/prompts/template"
+	"github.com/grammyjs/create-grammy/internal/updater"
 
 	"github.com/spf13/cobra"
 )
 
-const footer = `
- + Project '%s' created successfully!
- 
- Thank you for using grammY <3
- . Documentation  https://grammy.dev
- . GitHub         https://github.com/grammyjs/grammY
- . Community      https://telegram.me/grammyjs
-`
+const (
+	Version = "0.2.1"
+	footer  = `
+	 + Project '%s' created successfully!
+	 
+	 Thank you for using grammY <3
+	 . Documentation  https://grammy.dev
+	 . GitHub         https://github.com/grammyjs/grammY
+	 . Community      https://telegram.me/grammyjs
+	`
+)
 
 func run(cmd *cobra.Command, args []string) {
 	var projectName string
@@ -67,7 +71,27 @@ https://grammy.dev`,
 }
 
 func main() {
-	err := rootCmd.Execute()
+	skipUpdate := rootCmd.Flags().BoolP("skipupdate", "s", false, "-s true or --skipupdate=true")
+	self, err := os.Executable()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	updater := updater.New(Version)
+	if skipUpdate != nil && !*skipUpdate && updater.CheckHasUpdate() {
+		err := updater.UpdateBinary()
+		if err == nil {
+			fmt.Println("cli updated, restarting...")
+			err = updater.RestartSelf(self)
+			if err != nil {
+				fmt.Println(err)
+			}
+		} else {
+			fmt.Println(err.Error())
+		}
+	}
+
+	err = rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
 	}
