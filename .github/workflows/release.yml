@@ -31,4 +31,4 @@ jobs:
         sha256sum: "TRUE"
         overwrite: "TRUE"
         compress_assets: "FALSE"
-        asset_name: "${BINARY_NAME}-${GOOS}-${GOARCH}"
+        asset_name: create-grammy-${{ matrix.goos }}-${{ matrix.goarch }}
