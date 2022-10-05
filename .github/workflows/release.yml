@@ -1,4 +1,4 @@
-name: BUild artifacts for release
+name: Build assets for release
 
 on:
   workflow_dispatch:
