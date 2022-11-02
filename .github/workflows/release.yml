@@ -32,3 +32,5 @@ jobs:
         overwrite: "TRUE"
         compress_assets: "FALSE"
         asset_name: create-grammy-${{ matrix.goos }}-${{ matrix.goarch }}
+        executable_compression: "upx -9 -k"
+        ldflags: "-s -w"
