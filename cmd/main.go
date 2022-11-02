@@ -9,7 +9,6 @@ import (
 	"github.com/grammyjs/create-grammy/internal/prompts/name"
 	"github.com/grammyjs/create-grammy/internal/prompts/platform"
 	template_ "github.com/grammyjs/create-grammy/internal/prompts/template"
-	"github.com/grammyjs/create-grammy/internal/updater"
 
 	"github.com/spf13/cobra"
 )
@@ -70,27 +69,7 @@ https://grammy.dev`,
 }
 
 func main() {
-	skipUpdate := rootCmd.Flags().BoolP("skipupdate", "s", false, "-s true or --skipupdate=true")
-	self, err := os.Executable()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	updater := updater.New(self)
-	if skipUpdate != nil && !*skipUpdate && updater.CheckHasUpdate() {
-		err := updater.UpdateBinary()
-		if err == nil {
-			fmt.Println("cli updated, restarting...")
-			err = updater.RestartSelf()
-			if err != nil {
-				fmt.Println(err)
-			}
-		} else {
-			fmt.Println(err.Error())
-		}
-	}
-
-	err = rootCmd.Execute()
+	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
 	}
