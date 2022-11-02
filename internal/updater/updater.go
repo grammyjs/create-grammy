@@ -133,7 +133,7 @@ func (c *Updater) UpdateBinary() error {
 		return errors.New("cannot get latest release")
 	}
 
-	asset := &GithubReleaseAsset{}
+	var asset *GithubReleaseAsset
 
 	var suffix string
 
