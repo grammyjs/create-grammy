@@ -31,6 +31,6 @@ jobs:
         sha256sum: "TRUE"
         overwrite: "TRUE"
         compress_assets: "FALSE"
-        asset_name: create-grammy-${{ matrix.goos }}-${{ matrix.goarch }}
+        asset_name: create-grammy-${{ matrix.goos }}_${{ matrix.goarch }}
         executable_compression: "upx -9 -k"
         ldflags: "-s -w"
