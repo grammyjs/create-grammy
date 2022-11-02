@@ -9,7 +9,10 @@ Here is a preview of the tool: https://asciinema.org/a/504541
 
 ## Install
 
-TODO: Release executables
+Install using npm
+```shell
+npm i -g create-grammy@latest
+```
 
 Install using [Go](https://go.dev).
 
@@ -17,7 +20,7 @@ Install using [Go](https://go.dev).
 go install github.com/grammyjs/create-grammy@latest
 ```
 
-After installation, run **gmy** command to use the tool. You can provide a
+After installation, run **create-grammy** command to use the tool. You can provide a
 project name as the first argument.
 
 ## Templates
