@@ -29,6 +29,15 @@
       "cache_file": "src/mod.ts",
       "docker_prompt": true,
       "tsconfig_prompt": false
+    },
+    {
+      "name": "deno-deploy",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "examples",
+      "path": "deno-deploy",
+      "docker_prompt": false,
+      "tsconfig_prompt": false
     }
   ],
   "other": [
