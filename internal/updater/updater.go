@@ -57,7 +57,7 @@ func (c *Updater) CheckHasUpdate() bool {
 
 	var sha256Asset *GithubReleaseAsset
 	for _, a := range c.LatestRelease.Assets {
-		if strings.HasSuffix(a.Name, fmt.Sprintf("%s-%s.sha256", runtime.GOOS, runtime.GOARCH)) {
+		if strings.HasSuffix(a.Name, fmt.Sprintf("%s_%s.sha256", runtime.GOOS, runtime.GOARCH)) {
 			sha256Asset = a
 		}
 	}
