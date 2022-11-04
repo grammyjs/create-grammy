@@ -19,9 +19,9 @@ jobs:
           - goarch: arm64
             goos: windows
     steps:
+    - uses: actions/checkout@v3
     - name: Set version in env
       run: echo "CLI_VERSION=$(git tag | tail -1)" >> $GITHUB_ENV
-    - uses: actions/checkout@v3
     - uses: wangyoucao577/go-release-action@v1.32
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
