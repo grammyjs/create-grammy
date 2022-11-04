@@ -9,7 +9,6 @@ import (
 	"github.com/grammyjs/create-grammy/internal/prompts/name"
 	"github.com/grammyjs/create-grammy/internal/prompts/platform"
 	template_ "github.com/grammyjs/create-grammy/internal/prompts/template"
-	"github.com/grammyjs/create-grammy/internal/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -70,7 +69,6 @@ https://grammy.dev`,
 }
 
 func main() {
-	fmt.Println(utils.Version)
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
