@@ -1,38 +1,23 @@
 name: Build assets for release
 
 on:
-  workflow_dispatch:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  releases-matrix:
-    name: Release Go Binary
+  - name: Create Release
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        goos: [linux, windows, darwin]
-        goarch: ["386", amd64, arm64]
-        exclude:
-          - goarch: "386"
-            goos: darwin
-          - goarch: arm64
-            goos: windows
     steps:
-    - uses: actions/checkout@v3
-    - name: Set version in env
-      run: echo "CLI_VERSION=$(git tag | tail -1)" >> $GITHUB_ENV
-    - uses: wangyoucao577/go-release-action@v1.32
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        goversion: "1.19"
-        project_path: "./cmd"
-        binary_name: "create-grammy"
-        sha256sum: "TRUE"
-        overwrite: "TRUE"
-        compress_assets: "FALSE"
-        asset_name: create-grammy-${{ matrix.goos }}_${{ matrix.goarch }}
-        executable_compression: "upx -9 -k"
-        ldflags: "-s -w -X github.com/grammyjs/create-grammy/internal/utils.Version=${{ env.CLI_VERSION }}"
+      - uses: actions/checkout@v3
+      - uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
