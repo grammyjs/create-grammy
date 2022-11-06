@@ -1,10 +1,18 @@
 version: '3'
 
 tasks:
+  release:
+    - git tag v{{.CLI_ARGS}}
+    - jq '.version="{{.CLI_ARGS}}"' package.json > package.json.tmp
+    - rm package.json
+    - mv package.json.tmp package.json
+    - git add package.json
+    - git commit -m "release: v{{.CLI_ARGS}}""
+    - task: cl-new
+
   cl-new:
     cmds:
       - changeloguru g --version {{.CURRET_TAG}} --to {{.PREV_TAG}}
-    silent: true
     vars:
       CURRET_TAG:
         sh: git describe --tags $(git rev-list --tags --max-count=1)
