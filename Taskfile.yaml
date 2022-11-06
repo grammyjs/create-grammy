@@ -2,19 +2,19 @@ version: '3'
 
 tasks:
   release:
-    - git tag v{{.CLI_ARGS}}
-    - jq '.version="{{.CLI_ARGS}}"' package.json > package.json.tmp
-    - rm package.json
-    - mv package.json.tmp package.json
-    - git add package.json
-    - git commit -m "release: v{{.CLI_ARGS}}""
-    - task: cl-new
+    cmds:
+      - git tag v{{.CLI_ARGS}}
+      - jq '.version="{{.CLI_ARGS}}"' package.json > package.json.tmp
+      - rm package.json
+      - mv package.json.tmp package.json
+      - task: cl-new
+        vars: {VERSION: "{{.CLI_ARGS}}"}
+      - git add package.json CHANGELOG.md
+      - git commit -am "release: v{{.CLI_ARGS}}"
 
   cl-new:
     cmds:
-      - changeloguru g --version {{.CURRET_TAG}} --to {{.PREV_TAG}}
+      - changeloguru g --version {{.VERSION}} --to {{.PREV_TAG}}
     vars:
-      CURRET_TAG:
-        sh: git describe --tags $(git rev-list --tags --max-count=1)
       PREV_TAG:
         sh: git describe --abbrev=0 --tags --exclude="$(git describe --abbrev=0 --tags)" "$(git describe --abbrev=0 --tags)"
