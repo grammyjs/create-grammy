@@ -6,7 +6,8 @@ on:
       - 'v*'
 
 jobs:
-  - name: Create Release
+  create-relase:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
