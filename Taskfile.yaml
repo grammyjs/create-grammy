@@ -10,7 +10,7 @@ tasks:
       - task: cl-new
         vars: {VERSION: "{{.CLI_ARGS}}"}
       - git add package.json CHANGELOG.md
-      - git commit -am "release: v{{.CLI_ARGS}}"
+      - 'git commit -am "release: v{{.CLI_ARGS}}"'
 
   cl-new:
     cmds:
