@@ -1,6 +1,6 @@
 {
   "name": "@grammyjs/create-grammy",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Scaffold grammY projects in minute",
   "scripts": {
     "postinstall": "go-npm install",
