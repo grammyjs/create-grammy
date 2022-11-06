@@ -49,6 +49,42 @@
       "path": "templates/other/vercel-base-bot",
       "docker_prompt": true,
       "tsconfig_prompt": true
+    },
+    {
+      "name": "deta",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "examples",
+      "path": "deta",
+      "docker_prompt": false,
+      "tsconfig_prompt": false
+    },
+    {
+      "name": "local-bot-api-https",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "examples",
+      "path": "local-bot-api-https",
+      "docker_prompt": false,
+      "tsconfig_prompt": false
+    },
+    {
+      "name": "local-bot-api",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "examples",
+      "path": "local-bot-api",
+      "docker_prompt": false,
+      "tsconfig_prompt": false
+    },
+    {
+      "name": "supabase-edge-functions",
+      "type": "subfolder",
+      "owner": "grammyjs",
+      "repository": "examples",
+      "path": "supabase-edge-functions",
+      "docker_prompt": false,
+      "tsconfig_prompt": false
     }
   ]
 }
