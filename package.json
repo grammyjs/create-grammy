@@ -29,6 +29,6 @@
   },
   "homepage": "https://grammy.dev",
   "dependencies": {
-    "@go-task/go-npm": "0.1.15"
+    "@go-task/go-npm": "0.1.17"
   }
 }
