@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@grammyjs/runner": "1.0.4",
-    "grammy": "1.12.0"
+    "grammy": "1.13.0"
   },
   "devDependencies": {
     "@types/node": "18.11.9",
