@@ -11,7 +11,7 @@ Here is a preview of the tool: https://asciinema.org/a/504541
 
 Install using npm
 ```shell
-npm i -g create-grammy@latest
+npm i -g @grammyjs/create-grammy@latest
 ```
 
 Install using [Go](https://go.dev).
