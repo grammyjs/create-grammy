@@ -44,7 +44,7 @@ func run(cmd *cobra.Command, args []string) {
 
 	fmt.Println(`
  + Project folder set up successfully!
-   Additional configuration options for you:\n`)
+   Additional configuration options for you:`)
 
 	// Additional prompts and configuration
 	additional.Prompt(projectName, platform, template)
