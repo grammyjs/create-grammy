@@ -3,6 +3,7 @@ name: Build assets for release
 on:
   release:
     types: [created]
+  workflow_dispatch:
 
 jobs:
   releases-matrix:
