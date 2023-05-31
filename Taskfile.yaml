@@ -14,7 +14,7 @@ tasks:
 
   cl-new:
     cmds:
-      - changeloguru g --version {{.VERSION}} --to {{.PREV_TAG}}
+      - go run github.com/haunt98/changeloguru/cmd/changeloguru@latest g --version {{.VERSION}} --to {{.PREV_TAG}}
     vars:
       PREV_TAG:
         sh: git describe --abbrev=0 --tags --exclude="$(git describe --abbrev=0 --tags)" "$(git describe --abbrev=0 --tags)"
