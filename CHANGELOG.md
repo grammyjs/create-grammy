@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v0.2.13 (2023-05-31)
+
+### Fixed
+
+- fix: issues with promptkit/selection (2023-05-31)
+
+### Others
+
+- chore: add `node_modules` to gitignore (2023-05-31)
+
 ## v0.2.11 (2022-11-06)
 
 ### Added
