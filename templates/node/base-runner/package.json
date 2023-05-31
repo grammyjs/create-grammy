@@ -4,7 +4,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@grammyjs/runner": "2.0.2",
+    "@grammyjs/runner": "2.0.3",
     "grammy": "1.16.1"
   },
   "devDependencies": {
