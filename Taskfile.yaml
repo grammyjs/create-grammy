@@ -3,7 +3,6 @@ version: '3'
 tasks:
   release:
     cmds:
-      - git tag v{{.CLI_ARGS}}
       - jq '.version="{{.CLI_ARGS}}"' package.json > package.json.tmp
       - rm package.json
       - mv package.json.tmp package.json
@@ -11,6 +10,9 @@ tasks:
         vars: {VERSION: "{{.CLI_ARGS}}"}
       - git add package.json CHANGELOG.md
       - 'git commit -am "release: v{{.CLI_ARGS}}"'
+      - git tag v{{.CLI_ARGS}}
+      - git push
+      - git push --tags
 
   cl-new:
     cmds:
