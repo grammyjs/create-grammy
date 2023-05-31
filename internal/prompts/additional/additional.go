@@ -6,8 +6,8 @@ import (
 
 	"github.com/cavaliergopher/grab/v3"
 	"github.com/erikgeiser/promptkit/confirmation"
-	"github.com/erikgeiser/promptkit/selection"
 	"github.com/grammyjs/create-grammy/internal/files"
+	"github.com/grammyjs/create-grammy/internal/prompts"
 	"github.com/grammyjs/create-grammy/internal/utils"
 
 	t "github.com/grammyjs/create-grammy/internal/templates"
@@ -77,14 +77,11 @@ func Prompt(name string, platform string, template t.Template) {
 		}
 
 		if platform == "Node" {
-			prompt := selection.New(
+			choice, err := prompts.Prompt(
 				" > Choose a package manager of your choice:",
 				[]string{"npm", "yarn", "pnpm", "None"},
+				"   Package Managers",
 			)
-			prompt.FilterPrompt = "   Package Managers"
-			prompt.FilterPlaceholder = "Find"
-			prompt.PageSize = 5
-			choice, err := prompt.RunPrompt()
 			if err == nil && choice != "None" {
 				packageManager := choice
 				fmt.Println(" : Checking for package manager...")
