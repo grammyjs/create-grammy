@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      ref: 
+        required: true
 
 jobs:
   create-relase:
@@ -15,8 +19,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ inputs.ref || github.ref }}
+          release_name: ${{ inputs.ref || github.ref }}
           draft: false
           prerelease: false
       - uses: JS-DevTools/npm-publish@v2
