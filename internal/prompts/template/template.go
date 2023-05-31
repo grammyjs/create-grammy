@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/erikgeiser/promptkit/selection"
+	"github.com/grammyjs/create-grammy/internal/prompts"
 	t "github.com/grammyjs/create-grammy/internal/templates"
 )
 
@@ -21,11 +21,7 @@ func Prompt(platform string) t.Template {
 		templateChoices = append(templateChoices, template.Name)
 	}
 
-	templatePrompt := selection.New(" > Choose a template:", templateChoices)
-	templatePrompt.FilterPrompt = "   Templates for " + platform
-	templatePrompt.FilterPlaceholder = "Find"
-	templatePrompt.PageSize = 5
-	choice, err := templatePrompt.RunPrompt()
+	choice, err := prompts.Prompt(" > Choose a template:", templateChoices, "   Templates for "+platform)
 	if err != nil {
 		os.Exit(1)
 	}

@@ -3,18 +3,15 @@ package platform
 import (
 	"os"
 
-	"github.com/erikgeiser/promptkit/selection"
+	"github.com/grammyjs/create-grammy/internal/prompts"
 )
 
 func Prompt() string {
-	platformPrompt := selection.New(
+	choice, err := prompts.Prompt(
 		" > Choose a platform:",
 		[]string{"Deno", "Node", "Other"},
+		"   Platforms",
 	)
-	platformPrompt.FilterPrompt = "   Platforms"
-	platformPrompt.FilterPlaceholder = "Find"
-	platformPrompt.PageSize = 5
-	choice, err := platformPrompt.RunPrompt()
 	if err != nil {
 		os.Exit(1)
 	}
