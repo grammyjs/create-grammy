@@ -15,13 +15,13 @@ import (
 
 const (
 	footer = `
-	 + Project '%s' created successfully!
-	 
-	 Thank you for using grammY <3
-	 . Documentation  https://grammy.dev
-	 . GitHub         https://github.com/grammyjs/grammY
-	 . Community      https://telegram.me/grammyjs
-	`
+ + Project '%s' created successfully!
+
+ Thank you for using grammY <3
+ . Documentation  https://grammy.dev
+ . GitHub         https://github.com/grammyjs/grammY
+ . Community      https://telegram.me/grammyjs
+`
 )
 
 func run(cmd *cobra.Command, args []string) {

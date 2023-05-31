@@ -21,7 +21,7 @@ func Prompt(platform string) t.Template {
 		templateChoices = append(templateChoices, template.Name)
 	}
 
-	templatePrompt := selection.New(" > Choose a template:", selection.Choices(templateChoices))
+	templatePrompt := selection.New(" > Choose a template:", templateChoices)
 	templatePrompt.FilterPrompt = "   Templates for " + platform
 	templatePrompt.FilterPlaceholder = "Find"
 	templatePrompt.PageSize = 5
@@ -32,7 +32,7 @@ func Prompt(platform string) t.Template {
 
 	var selectedTemplate t.Template
 	for _, template := range templates {
-		if template.Name == choice.String {
+		if template.Name == choice {
 			selectedTemplate = template
 			break
 		}

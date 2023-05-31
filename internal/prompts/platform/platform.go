@@ -9,7 +9,7 @@ import (
 func Prompt() string {
 	platformPrompt := selection.New(
 		" > Choose a platform:",
-		selection.Choices([]string{"Deno", "Node", "Other"}),
+		[]string{"Deno", "Node", "Other"},
 	)
 	platformPrompt.FilterPrompt = "   Platforms"
 	platformPrompt.FilterPlaceholder = "Find"
@@ -18,5 +18,5 @@ func Prompt() string {
 	if err != nil {
 		os.Exit(1)
 	}
-	return choice.String
+	return choice
 }

@@ -79,14 +79,14 @@ func Prompt(name string, platform string, template t.Template) {
 		if platform == "Node" {
 			prompt := selection.New(
 				" > Choose a package manager of your choice:",
-				selection.Choices([]string{"npm", "yarn", "pnpm", "None"}),
+				[]string{"npm", "yarn", "pnpm", "None"},
 			)
 			prompt.FilterPrompt = "   Package Managers"
 			prompt.FilterPlaceholder = "Find"
 			prompt.PageSize = 5
 			choice, err := prompt.RunPrompt()
-			if err == nil && choice.String != "None" {
-				packageManager := choice.String
+			if err == nil && choice != "None" {
+				packageManager := choice
 				fmt.Println(" : Checking for package manager...")
 				err := utils.IsInstalled(packageManager)
 
