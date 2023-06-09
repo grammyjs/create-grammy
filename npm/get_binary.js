@@ -12,9 +12,15 @@ function getPlatform() {
   };
   const NODEJS_ARCH_TO_GOARCH = { x64: "amd64", arm64: "arm64", ia32: "386" };
 
+  const platform = NODEJS_OS_TO_GOOS[operatingSystem];
+  const arch = NODEJS_ARCH_TO_GOARCH[architecture];
+
+  if (platform || arch) {
+    throw "This operating system and architecure combination is not supported";
+  }
   return {
-    platform: NODEJS_OS_TO_GOOS[operatingSystem],
-    arch: NODEJS_ARCH_TO_GOARCH[architecture],
+    platform,
+    arch,
   };
 }
 

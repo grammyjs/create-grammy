@@ -1,4 +1,4 @@
-const { existsSync, mkdirSync, createWriteStream } = require("fs");
+const fs = require("fs");
 const { join } = require("path");
 const { spawnSync } = require("child_process");
 
@@ -43,14 +43,14 @@ class Binary {
     this.installDirectory = join(__dirname, "node_modules", ".bin");
 
     if (!existsSync(this.installDirectory)) {
-      mkdirSync(this.installDirectory, { recursive: true });
+      fs.mkdirSync(this.installDirectory, { recursive: true });
     }
 
     this.binaryPath = join(this.installDirectory, this.name);
   }
 
   exists() {
-    return existsSync(this.binaryPath);
+    return fs.existsSync(this.binaryPath);
   }
 
   install(fetchoptions, suppressLogs = false) {
@@ -63,11 +63,25 @@ class Binary {
       return Promise.resolve();
     }
 
-    if (existsSync(this.installDirectory)) {
-      rimraf.sync(this.installDirectory);
+    if (fs.existsSync(this.installDirectory)) {
+      function rimraf(directoryPath) {
+        fs.readdirSync(directoryPath).forEach((file) => {
+          const filePath = `${directoryPath}/${file}`;
+
+          if (fs.lstatSync(filePath).isDirectory()) {
+            deleteDirectorySync(filePath); // recursively delete subdirectories
+          } else {
+            fs.unlinkSync(filePath); // delete files
+          }
+        });
+
+        fs.rmdirSync(directoryPath); // delete the empty directory
+      }
+
+      rimraf(this.installDirectory);
     }
 
-    mkdirSync(this.installDirectory, { recursive: true });
+    fs.mkdirSync(this.installDirectory, { recursive: true });
 
     if (suppressLogs) {
       console.error(`Downloading release from ${this.url}`);
@@ -76,7 +90,7 @@ class Binary {
     return axios({ ...fetchOptions, url: this.url, responseType: "stream" })
       .then((res) => {
         return new Promise((resolve, reject) => {
-          const sink = res.data.pipe(createWriteStream(this.binaryPath));
+          const sink = res.data.pipe(fs.createWriteStream(this.binaryPath));
           sink.on("finish", () => resolve());
           sink.on("error", (err) => reject(err));
         });
