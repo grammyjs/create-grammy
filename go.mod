@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/cavaliergopher/grab/v3 v3.0.1
 	github.com/erikgeiser/promptkit v0.8.0
-	github.com/spf13/cobra v1.7.0
+	github.com/spf13/cobra v1.8.0
 )
 
 require (
