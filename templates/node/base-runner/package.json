@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "@types/node": "18.16.16",
-    "typescript": "5.0.4"
+    "typescript": "5.3.2"
   }
 }
