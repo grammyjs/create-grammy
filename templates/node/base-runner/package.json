@@ -8,7 +8,7 @@
     "grammy": "1.16.1"
   },
   "devDependencies": {
-    "@types/node": "18.16.16",
+    "@types/node": "20.10.3",
     "typescript": "5.0.4"
   }
 }
