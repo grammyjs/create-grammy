@@ -1,3 +1,6 @@
+> [!WARNING]
+> There is not enough motivation because in my opinion it is easier to copy by hand what this cli offers. Also requires adding existing templates, which I think [grammyjs/examples](https://github.com/grammyjs/examples) and [grammyjs/awesome-grammY](https://github.com/grammyjs/awesome-grammY) does a great job with. If we want a cli for grammy, I think it should be a utility not just for scaffold templates, but also for modifying code, like `gmy add sessions conversations`, which will adjust middlewares to code.
+
 # Create grammy
 
 Fast and simple command line tool to setup the needed files to quickly create
