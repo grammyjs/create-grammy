@@ -2,7 +2,7 @@ name: Build assets for release
 
 on:
   release:
-    types: [published]
+    types: [created]
   workflow_dispatch:
 
 permissions:
@@ -28,6 +28,7 @@ jobs:
       run: echo "CLI_VERSION=$(git tag | tail -1)" >> $GITHUB_ENV
     - uses: wangyoucao577/go-release-action@v1.38
       with:
+        release_tag: ${{ env.CLI_VERSION }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
