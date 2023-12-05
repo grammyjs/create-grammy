@@ -1,13 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
-  workflow_dispatch:
-    inputs:
-      ref: 
-        required: true
+  release:
+    types: [created]
 
 jobs:
   create-relase:
@@ -17,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ inputs.ref || github.ref }}
           release_name: ${{ inputs.ref || github.ref }}
