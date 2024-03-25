@@ -3,15 +3,14 @@
   "version": "0.2.15",
   "description": "Scaffold grammY projects in minute",
   "scripts": {
-    "postinstall": "go-npm install",
-    "preuninstall": "go-npm uninstall"
+    "postinstall": "node ./npm/install.mjs"
   },
-  "goBinary": {
-    "name": "create-grammy",
-    "path": "./bin",
-    "url": "https://github.com/grammyjs/create-grammy/releases/download/v{{version}}/create-grammy-{{platform}}_{{arch}}"
+  "bin": {
+    "create-grammy": "./npm/run.js"
   },
-  "files": [],
+  "files": [
+    "npm/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/grammyjs/create-grammy.git"
@@ -29,6 +28,6 @@
   },
   "homepage": "https://grammy.dev",
   "dependencies": {
-    "@go-task/go-npm": "0.1.18"
+    "axios": "^1.4.0"
   }
 }
